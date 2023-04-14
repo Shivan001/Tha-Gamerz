@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="controller.jpeg">
+    <meta charset="UTF-8">
+    <title>Home</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+
+    *{
+      box-sizing: border-box;
+      overflow-x: hidden;
+    }
+    body{
+      margin: 0;
+      color: #FDFDFF;
+      background-color: #0D0C1D;
+    }
+    #navbar {
+      overflow: hidden;
+      padding: 90px 10px; /* Large padding which will shrink on scroll (using JS) */
+      transition: 0.4s; /* Adds a transition effect when the padding is decreased */
+      position: fixed; /* Sticky/fixed navbar */
+      width: 100%;
+      top: 0; /* At the top */
+      z-index: 99;
+      background: #0D0C1DF6;
+      color: #FDFDFF;
+    }
+
+    /* Style the navbar links */
+    #navbar a {
+      float: left;
+      color: #FDFDFF;
+      text-align: center;
+      padding: 12px;
+      text-decoration: none;
+      font-size: 18px;
+      line-height: 25px;
+      border-radius: 4px;
+    }
+
+    /* Style the logo */
+    #navbar #logo {
+      font-size: 35px;
+      font-family: 'Dancing Script', cursive;
+      font-weight: bold;
+      transition: 0.4s;
+    }
+
+    /* Links on mouse-over */
+    #navbar a:hover {
+      background-color: #161B33;
+      color: #FDFDFF;
+    }
+
+    /* Style the active/current link */
+    #navbar a.active {
+      text-decoration: underline;
+      font-size: 115%;
+      color: #FDFDFF;
+    }
+
+    /* Display some links to the right */
+    #navbar-right {
+      float: right;
+    }
+
+    /* Add responsiveness - on screens less than 580px wide, display the navbar vertically instead of horizontally */
+    @media screen and (max-width: 580px) {
+      #navbar {
+        padding: 20px 10px !important; /* Use !important to make sure that JavaScript doesn't override the padding on small screens */
+      }
+      #navbar a {
+        float: none;
+        display: block;
+        text-align: left;
+      }
+      #navbar-right {
+        float: none;
+      }
+      #myVideo {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+
+      }
+    }
+
+    /*for animation*/
+
+    section {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    section:nth-child(1) {
+      color: #FDFDFF;
+    }
+    section:nth-child(2) {
+      color: #FDFDFF;
+      background: #161B33;
+    }
+    section:nth-child(3) {
+      color: #FDFDFF;
+    }
+    section:nth-child(4) {
+      color: #FDFDFF;
+      background: #161B33;
+    }
+    section .container {
+      margin: 100px;
+    }
+    section h1 {
+      font-size: 3rem;
+      margin: 20px;
+    }
+    section h2 {
+      font-size: 40px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    section .text-container {
+      display: flex;
+    }
+    section .text-container .text-box {
+      margin: 20px;
+      padding: 15px;
+      background: inherit;
+    }
+    section .text-container .text-box h3 {
+      font-size: 30px;
+      text-align: center;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 900px) {
+      section h1 {
+        font-size: 2rem;
+        text-align: center;
+      }
+      section .text-container {
+        flex-direction: column;
+      }
+    }
+
+    .reveal {
+      position: relative;
+      opacity: 0;
+    }
+
+    .reveal.active {
+      opacity: 1;
+    }
+    .active.fade-bottom {
+      animation: fade-bottom 1s ease-in;
+    }
+    .active.fade-left {
+      animation: fade-left 1s ease-in;
+    }
+    .active.fade-right {
+      animation: fade-right 1s ease-in;
+    }
+    @keyframes fade-bottom {
+      0% {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    @keyframes fade-left {
+      0% {
+        transform: translateX(-100px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes fade-right {
+      0% {
+        transform: translateX(100px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    /*For Search Button*/
+    .button {
+      background-color: #98DFEA; /* Green */
+      border: none;
+      color: #0D0C1D;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      width: 50%;
+      border-radius: 12px;
+      margin-left: 13vw;
+      margin-right: 10vw;
+      transition: box-shadow 1s;
+    }
+
+    .button:hover{
+      box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+
+    #ic{
+      background-color: #474973;
+      color: #FDFDFF;
+      flex-direction: row;
+    }
+
+
+    footer{
+      width: 100%;
+      background-color: #0D0C1D;
+      padding: 20px;
+      position: relative;
+      bottom: 0;
+      text-align: center;
+    }
+
+    /*hide scrollbar*/
+    /*GOOGLE*/
+    body::-webkit-scrollbar{
+      display: none;
+    }
+    /*MS EDGE*/
+    body {
+      -ms-overflow-style: none;
+    }
+    /*FIREFOX*/
+    html {
+      scrollbar-width: none;
+    }
+
+  </style>
+</head>
+<body>
+<div id="navbar">
+  <a href="index2.html" id="logo">Tha Gamerz</a>
+  <div id="navbar-right">
+    <a class="active" href="index2.html">Home</a>
+    <a href="index.html">Games</a>
+    <a href="index3.html">Contact</a>
+  </div>
+</div>
+
+<video autoplay muted loop id="myVideo">
+  <source src="Wwebsite Video.mp4" type="video/mp4">
+</video>
+
+<section class="container reveal fade-bottom">
+  <h1>Welcome to the Ultimate Gaming Experience</h1>
+</section>
+<section>
+  <div class="container reveal fade-bottom">
+    <h2>Unlock Unlimited Possibilities</h2>
+    <div class="text-container">
+        <div class="text-box">
+          <img src="https://external-preview.redd.it/uiZ1std22vvqTeALRbwuEWdDDOdb-xV_fMlMl8vuRkA.jpg?auto=webp&s=2754c4cf24995fef0c41f39cdea2af226905dffa" width="750px" height="500px">
+        </div>
+        <div class="text-box" style="font-size: 150%;width: 30%">
+          With close to 1 million game records, we have information on any game you could possibly think of!  <br><br>We certainly have all the information you need
+          to know before indulging in your next game!
+        </div>
+
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container reveal fade-left">
+    <h2>Explore the Best in Fantasy Games</h2>
+    <div class="text-container">
+      <div class="text-box">
+        <img src="https://th.bing.com/th/id/OIP.cXGiGKzIt4x4F6PJ3GzwXgHaJ3?pid=ImgDet&rs=1" width="215px" height="325px">
+      </div>
+      <div class="text-box">
+        <img src="https://th.bing.com/th/id/R.57b31e1aff9753a2510eed9109a33153?rik=mCdWjcRcN5tgKA&pid=ImgRaw&r=0" width="215px" height="325px">
+      </div>
+      <div class="text-box">
+        <img src="https://th.bing.com/th/id/OIP.8fGYryi3Z1g1OWGBx4krFwHaKc?pid=ImgDet&rs=1" width="215px" height="325px">
+      </div>
+      <div class="text-box">
+        <img src="https://th.bing.com/th/id/R.7013a56faa685ed77b623be37f11427f?rik=khMUgafDT6RWEw&riu=http%3a%2f%2fwww.gamereleasedates.net%2fimages%2fcovers%2fps4%2fcover-ps4-lego-worlds.jpg&ehk=DQ5DK4JPlxnK5xDBtV159ug9ow18L4YypMeH5tQtCXM%3d&risl=&pid=ImgRaw&r=0" width="215px" height="325px">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container reveal fade-right">
+    <h2>Or Jump into Action with these Selections...</h2>
+    <div class="text-container">
+      <div class="text-box">
+        <img src="https://th.bing.com/th/id/R.f6ed1f8fddd9f83e8f84540a99fcc5cd?rik=L8mnpA%2fpxyAqkg&pid=ImgRaw&r=0" width="215px" height="325px">
+      </div>
+      <div class="text-box">
+        <img src="https://th.bing.com/th/id/OIP.L8-d67ccjWMi1FOHC1aNpAHaLH?pid=ImgDet&rs=1" width="215px" height="325px">
+      </div>
+      <div class="text-box">
+        <img src="https://th.bing.com/th/id/OIP.ynCAVnuHTNbXhiBNQtucwgHaKc?pid=ImgDet&rs=1" width="215px" height="325px">
+      </div>
+      <div class="text-box">
+        <img src="https://th.bing.com/th/id/R.21ce016994ebf9b76f76ee00d28fd55b?rik=9%2fv7If7mjoyV1w&pid=ImgRaw&r=0" width="215px" height="325px">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="container reveal fade-bottom" id="ic">
+  <h1>What are you waiting for?</h1>
+  <a href="index.html" class="button">Explore Now</a>
+</section>
+
+<footer>
+  A Pete tha Bunny Company
+</footer>
+
+<script>
+  window.onscroll = function() {scrollFunction()};
+
+  function scrollFunction() {
+    if (document.body.scrollTop > 60 || document.documentElement.scrollTop > 60) {
+      document.getElementById("navbar").style.padding = "30px 10px";
+      document.getElementById("logo").style.fontSize = "25px";
+    } else {
+      document.getElementById("navbar").style.padding = "60px 10px";
+      document.getElementById("logo").style.fontSize = "35px";
+    }
+  }
+
+  // for animation
+  function reveal() {
+    var reveals = document.querySelectorAll(".reveal");
+
+    for (var i = 0; i < reveals.length; i++) {
+      var windowHeight = window.innerHeight;
+      var elementTop = reveals[i].getBoundingClientRect().top;
+      var elementVisible = 150;
+
+      if (elementTop < windowHeight - elementVisible) {
+        reveals[i].classList.add("active");
+      } else {
+        reveals[i].classList.remove("active");
+      }
+    }
+  }
+
+  window.addEventListener("scroll", reveal);
+</script>
+</body>
+</html>
